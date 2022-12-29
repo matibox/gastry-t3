@@ -43,13 +43,16 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String      @id @default(cuid())
   name          String?
-  email         String?   @unique
-  emailVerified Boolean
+  email         String?     @unique
+  emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
+  recipes       Recipe[]
+  favourites    Favourite[]
+  menus         Menu[]
 }
 
 model VerificationToken {
@@ -58,4 +61,103 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Recipe {
+  id          String       @id @default(cuid())
+  user        User         @relation(fields: [userId], references: [id])
+  userId      String
+  title       String
+  cookingTime Int
+  steps       Step[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  thumbnail   String?
+  types       RecipeType[]
+  ingredients Ingredient[]
+  favourites  Favourite[]
+  timeOfDays  TimeOfDay[]
+}
+
+model Step {
+  id           String @id @default(cuid())
+  instructions String @db.Text
+  recipe       Recipe @relation(fields: [recipeId], references: [id])
+  recipeId     String
+}
+
+enum RecipeTypeName {
+  vegetarian
+  vegan
+  spicy
+}
+
+model RecipeType {
+  id      String         @id @default(cuid())
+  name    RecipeTypeName
+  recipes Recipe[]
+}
+
+model Ingredient {
+  id      String   @id @default(cuid())
+  name    String
+  value   Int
+  unit    String?
+  recipes Recipe[]
+}
+
+model Favourite {
+  id       String @id @default(cuid())
+  user     User   @relation(fields: [userId], references: [id])
+  recipe   Recipe @relation(fields: [recipeId], references: [id])
+  userId   String
+  recipeId String
+
+  @@unique([userId, recipeId])
+}
+
+model Menu {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  name      String
+  updatedAt DateTime @updatedAt
+  days      Day[]
+}
+
+enum WeekDays {
+  monday
+  tuesday
+  wednesday
+  thrusday
+  friday
+  saturday
+  sunday
+}
+
+model Day {
+  id         String      @id @default(uuid())
+  menu       Menu        @relation(fields: [menuId], references: [id], onDelete: Cascade)
+  menuId     String
+  name       WeekDays
+  order      Int         @db.UnsignedTinyInt
+  timeOfDays TimeOfDay[]
+}
+
+enum TimeOfDays {
+  morning
+  before_noon
+  noon
+  afternoon
+  evening
+}
+
+model TimeOfDay {
+  id       String     @id @default(cuid())
+  day      Day        @relation(fields: [dayId], references: [id])
+  dayId    String
+  recipe   Recipe?    @relation(fields: [recipeId], references: [id])
+  recipeId String?
+  name     TimeOfDays
+  order    Int        @db.UnsignedTinyInt
 }
