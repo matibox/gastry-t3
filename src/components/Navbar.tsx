@@ -1,17 +1,22 @@
-import { useState, type FC } from 'react';
+import { useRef, useState, type FC } from 'react';
 import Image from 'next/image';
 import Logo from '../../public/logo.png';
 import Link from 'next/link';
 import { useSession, signIn } from 'next-auth/react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Button from './Button';
+import NavMenu from './NavMenu';
+import { useClickOutside } from '../hooks/useClickOutside';
 
 const Navbar: FC = () => {
   const { data: session, status } = useSession();
   const [menuOpened, setMenuOpened] = useState(false);
 
+  const btnRef = useRef<HTMLButtonElement>(null);
+  useClickOutside(btnRef, setMenuOpened, 1);
+
   return (
-    <div className='flex h-14 items-center justify-between bg-black px-5 md:px-16'>
+    <div className='relative flex h-14 items-center justify-between bg-black px-5 md:px-16'>
       <Link href='/'>
         <Image
           src={Logo}
@@ -21,9 +26,13 @@ const Navbar: FC = () => {
       </Link>
       {session && (
         <button
-          onClick={() => setMenuOpened(prev => !prev)}
+          onClick={e => {
+            e.stopPropagation();
+            setMenuOpened(prev => !prev);
+          }}
           className='flex items-center gap-3'
           aria-label='open menu'
+          ref={btnRef}
         >
           <Image
             src={session.user?.image ?? '/defaultAvatar.png'}
@@ -48,8 +57,11 @@ const Navbar: FC = () => {
       )}
       {status === 'loading' ||
         (!session && (
-          <Button handleClick={() => signIn('google')}>login</Button>
+          <Button handleClick={() => signIn('google')}>sign in</Button>
         ))}
+      <AnimatePresence>
+        {menuOpened && session && <NavMenu session={session} />}
+      </AnimatePresence>
     </div>
   );
 };
