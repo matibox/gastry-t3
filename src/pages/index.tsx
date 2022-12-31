@@ -1,11 +1,15 @@
 import { type NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRef } from 'react';
+import Hero from '../components/hero/Hero';
 
 import { trpc } from '../utils/trpc';
 
 const Home: NextPage = () => {
   // const hello = trpc.example.hello.useQuery({ text: 'from tRPC' });
+
+  const secRef = useRef<HTMLElement>(null);
 
   return (
     <>
@@ -18,7 +22,9 @@ const Home: NextPage = () => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <div className='flex flex-col'>
-        <section>{/* Hero */}</section>
+        <Hero scrollToRef={secRef} />
+
+        <section ref={secRef} className='h-screen'></section>
       </div>
     </>
   );

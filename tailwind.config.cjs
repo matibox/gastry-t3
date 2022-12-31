@@ -18,6 +18,9 @@ module.exports = {
         montserrat: ['var(--montserrat)', ...fontFamily.sans],
         'open-sans': ['var(--open-sans)', ...fontFamily.sans],
       },
+      backgroundImage: {
+        hero: "url('/hero.webp')",
+      },
     },
   },
   plugins: [],

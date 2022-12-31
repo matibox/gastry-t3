@@ -16,7 +16,7 @@ const Navbar: FC = () => {
   useClickOutside(btnRef, setMenuOpened);
 
   return (
-    <div className='fixed top-0 left-0 flex h-[var(--navbar-height)] w-screen items-center justify-between bg-black px-5 md:px-16'>
+    <div className='fixed top-0 left-0 z-50 flex h-[var(--navbar-height)] w-screen items-center justify-between bg-black px-5 md:px-16'>
       <Link href='/'>
         <Image
           src={Logo}
