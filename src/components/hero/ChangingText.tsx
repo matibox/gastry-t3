@@ -1,4 +1,4 @@
-import { useEffect, useState, type FC } from 'react';
+import { useCallback, useEffect, useState, type FC } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 
 type FilledArr<T> = [T, ...T[]];
@@ -30,14 +30,14 @@ const ChangingText: FC<ChangingTextProps> = ({ textOptions }) => {
 function useTextChange(textOptions: FilledArr<string>, delay: number) {
   const [displayedText, setDisplayedText] = useState<string>(textOptions[0]);
 
-  function handleTextChange() {
+  const handleTextChange = useCallback(() => {
     setDisplayedText(prevText => {
       const index = textOptions.indexOf(prevText) + 1;
       let textOption = textOptions[index];
       if (!textOption) textOption = textOptions[0];
       return textOption;
     });
-  }
+  }, [setDisplayedText, textOptions]);
 
   useEffect(() => {
     const interval = setInterval(handleTextChange, delay);
