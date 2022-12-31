@@ -13,7 +13,7 @@ const Navbar: FC = () => {
   const [menuOpened, setMenuOpened] = useState(false);
 
   const btnRef = useRef<HTMLButtonElement>(null);
-  useClickOutside(btnRef, setMenuOpened, 1);
+  useClickOutside(btnRef, setMenuOpened);
 
   return (
     <div className='relative flex h-14 items-center justify-between bg-black px-5 md:px-16'>

@@ -7,13 +7,12 @@ import {
 
 export function useClickOutside(
   ref: RefObject<HTMLElement>,
-  setOpened: Dispatch<SetStateAction<boolean>>,
-  hierarchyIndex?: number
+  setOpened: Dispatch<SetStateAction<boolean>>
 ) {
   useEffect(() => {
     const closeMenu = (e: MouseEvent) => {
       const path = e.composedPath();
-      if (path[0] !== ref.current) {
+      if (ref.current && !path.includes(ref.current)) {
         setOpened(false);
       }
     };
@@ -23,5 +22,5 @@ export function useClickOutside(
     return () => {
       document.body.removeEventListener('click', closeMenu);
     };
-  }, [setOpened, hierarchyIndex, ref]);
+  }, [setOpened, ref]);
 }
