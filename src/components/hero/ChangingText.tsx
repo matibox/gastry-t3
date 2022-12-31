@@ -45,7 +45,7 @@ function useTextChange(textOptions: FilledArr<string>, delay: number) {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [handleTextChange, delay]);
 
   return { displayedText };
 }
