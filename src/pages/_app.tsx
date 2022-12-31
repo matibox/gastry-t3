@@ -7,6 +7,7 @@ import '../styles/globals.css';
 import { trpc } from '../utils/trpc';
 
 import Navbar from '../components/ui/Navbar';
+import MobileMenu from '../components/ui/MobileMenu';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -38,6 +39,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
       >
         <Component {...pageProps} />
       </main>
+      <nav className={`${montserrat.variable} ${openSans.variable}`}>
+        <MobileMenu />
+      </nav>
     </SessionProvider>
   );
 };
