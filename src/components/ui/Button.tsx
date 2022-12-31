@@ -1,6 +1,6 @@
 import { type FC } from 'react';
 
-type ButtonProps = {
+export type ButtonProps = {
   children: JSX.Element | string;
   handleClick?: () => void;
   styles?: string;
