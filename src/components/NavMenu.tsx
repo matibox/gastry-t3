@@ -39,6 +39,20 @@ const itemVariants: Variants = {
   },
 };
 
+type Item = {
+  route: string;
+  title: string;
+  icon: string;
+};
+
+const links: Item[] = [
+  {
+    route: '/account',
+    title: 'account',
+    icon: '/account_circle.png',
+  },
+];
+
 type NavMenuProps = {
   session: Session;
 };
@@ -58,21 +72,23 @@ const NavMenu: FC<NavMenuProps> = ({ session }) => {
       >
         Welcome, {session.user?.name}
       </motion.li>
-      <motion.li variants={itemVariants} className='pt-2'>
-        <Link
-          href='/account'
-          className='relative flex w-full items-center justify-between transition-colors duration-200 before:absolute before:top-1/2 before:-left-4 before:h-5 before:w-1 before:-translate-y-[40%] before:rounded-r-md before:transition-colors before:duration-200 hover:text-orange hover:before:bg-orange'
-        >
-          <span className='text-lg'>account</span>
-          <Image
-            src='/account_circle.png'
-            alt='account'
-            width={20}
-            height={20}
-            className='aspect-square h-5'
-          />
-        </Link>
-      </motion.li>
+      {links.map(link => (
+        <motion.li variants={itemVariants} className='pt-3' key={link.route}>
+          <Link
+            href={link.route}
+            className='relative flex w-full items-center justify-between transition-colors duration-200 before:absolute before:top-1/2 before:-left-4 before:h-5 before:w-1 before:-translate-y-[40%] before:rounded-r-md before:transition-colors before:duration-200 hover:text-orange hover:before:bg-orange'
+          >
+            <span className='text-lg'>{link.title}</span>
+            <Image
+              src={link.icon}
+              alt='account'
+              width={20}
+              height={20}
+              className='aspect-square h-5'
+            />
+          </Link>
+        </motion.li>
+      ))}
       <motion.li variants={itemVariants} className='pt-3'>
         <button
           className='relative flex w-full items-center justify-between transition-colors duration-200 before:absolute before:top-1/2 before:-left-4 before:h-5 before:w-1 before:-translate-y-[40%] before:rounded-r-md before:transition-colors before:duration-200 hover:text-orange hover:before:bg-orange'
