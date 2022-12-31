@@ -99,7 +99,7 @@ const MobileMenu: FC = () => {
   const router = useRouter();
 
   return (
-    <div className='fixed bottom-0 left-0 flex h-14 w-screen items-center justify-evenly bg-black md:hidden'>
+    <nav className='fixed bottom-0 left-0 flex h-14 w-screen items-center justify-evenly bg-black md:hidden'>
       {links.map(link => (
         <Link
           href={link.route}
@@ -111,7 +111,7 @@ const MobileMenu: FC = () => {
           {link.icon}
         </Link>
       ))}
-    </div>
+    </nav>
   );
 };
 

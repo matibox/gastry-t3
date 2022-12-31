@@ -39,9 +39,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
       >
         <Component {...pageProps} />
       </main>
-      <nav className={`${montserrat.variable} ${openSans.variable}`}>
-        <MobileMenu />
-      </nav>
+      <MobileMenu />
     </SessionProvider>
   );
 };
