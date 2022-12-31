@@ -1,12 +1,12 @@
 import { useRef, useState, type FC } from 'react';
 import Image from 'next/image';
-import Logo from '../../public/logo.png';
+import Logo from '../../../public/logo.png';
 import Link from 'next/link';
 import { useSession, signIn } from 'next-auth/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Button from './Button';
 import NavMenu from './NavMenu';
-import { useClickOutside } from '../hooks/useClickOutside';
+import { useClickOutside } from '../../hooks/useClickOutside';
 
 const Navbar: FC = () => {
   const { data: session, status } = useSession();
@@ -16,7 +16,7 @@ const Navbar: FC = () => {
   useClickOutside(btnRef, setMenuOpened);
 
   return (
-    <div className='relative flex h-14 items-center justify-between bg-black px-5 md:px-16'>
+    <div className='fixed top-0 left-0 flex h-[var(--navbar-height)] w-screen items-center justify-between bg-black px-5 md:px-16'>
       <Link href='/'>
         <Image
           src={Logo}

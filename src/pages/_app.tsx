@@ -6,7 +6,7 @@ import '../styles/globals.css';
 
 import { trpc } from '../utils/trpc';
 
-import Navbar from '../components/Navbar';
+import Navbar from '../components/ui/Navbar';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -28,10 +28,14 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <nav className={`${montserrat.variable} ${openSans.variable}`}>
+      <nav
+        className={`${montserrat.variable} ${openSans.variable} h-[var(--navbar-height)]`}
+      >
         <Navbar />
       </nav>
-      <main className={`${montserrat.variable} ${openSans.variable}`}>
+      <main
+        className={`${montserrat.variable} ${openSans.variable} min-h-[calc(100vh_-_var(--navbar-height))]`}
+      >
         <Component {...pageProps} />
       </main>
     </SessionProvider>
