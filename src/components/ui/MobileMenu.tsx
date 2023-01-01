@@ -98,6 +98,8 @@ const links: Item[] = [
 const MobileMenu: FC = () => {
   const router = useRouter();
 
+  if (router.pathname === '/recipes/new') return null;
+
   return (
     <nav className='fixed bottom-0 left-0 flex h-14 w-screen items-center justify-evenly bg-black md:hidden'>
       {links.map(link => (

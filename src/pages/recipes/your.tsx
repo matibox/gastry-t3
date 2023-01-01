@@ -1,16 +1,22 @@
 import { type NextPage } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import RoundButton from '../../components/ui/RoundButton';
 
 const YourRecipes: NextPage = () => {
+  const router = useRouter();
+
   return (
     <>
       <Head>
         <title>Your recipes - Gastry</title>
       </Head>
-      <div className='relative flex w-screen flex-col items-center gap-6 py-6'>
+      <div className='relative flex h-[calc(100vh_-_var(--navbar-height)_-_3rem)] w-screen flex-col items-center gap-6 py-6 md:h-full'>
         <h1 className='font-montserrat text-4xl text-black'>your recipes</h1>
-        <RoundButton styles='fixed bottom-8 right-8'>
+        <RoundButton
+          styles='fixed bottom-20 right-4'
+          handleClick={() => router.push('/recipes/new')}
+        >
           <svg
             width='19'
             height='19'
