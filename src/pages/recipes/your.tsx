@@ -1,5 +1,5 @@
 import { type GetServerSideProps, type NextPage } from 'next';
-import { Session } from 'next-auth';
+import { type Session } from 'next-auth';
 import { useSession } from 'next-auth/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -7,7 +7,7 @@ import RoundButton from '../../components/ui/RoundButton';
 import SignIn from '../../components/ui/SignIn';
 import {
   getServerAuthSession,
-  InferGSSPWithSession,
+  type InferGSSPWithSession,
 } from '../../server/common/get-server-auth-session';
 
 const YourRecipes: NextPage<

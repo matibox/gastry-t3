@@ -31,7 +31,7 @@ const RoundButton: FC<ButtonProps> = ({
       animate='initial'
       whileHover={`${reducedMotion ? 'initial' : 'hover'}`}
       variants={buttonVariants}
-      className={`flex aspect-square h-14 items-center justify-center overflow-hidden bg-orange text-white drop-shadow-xl ${styles}`}
+      className={`flex aspect-square h-14 items-center justify-center overflow-hidden bg-orange text-white ${styles}`}
       onClick={handleClick}
     >
       {children}
