@@ -5,6 +5,7 @@ export type ButtonProps = {
   handleClick?: () => void;
   styles?: string;
   variant?: 'normal' | 'secondary';
+  dontAnimate?: boolean;
 };
 
 const Button: FC<ButtonProps> = ({

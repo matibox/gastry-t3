@@ -1,5 +1,5 @@
 import { type FC } from 'react';
-import { ButtonProps } from './Button';
+import { type ButtonProps } from './Button';
 import { motion, useReducedMotion, type Variants } from 'framer-motion';
 
 const buttonVariants: Variants = {
@@ -22,6 +22,7 @@ const RoundButton: FC<ButtonProps> = ({
   children,
   handleClick = () => null,
   styles,
+  dontAnimate = false,
 }) => {
   const reducedMotion = useReducedMotion();
 
@@ -29,9 +30,11 @@ const RoundButton: FC<ButtonProps> = ({
     <motion.button
       initial='initial'
       animate='initial'
-      whileHover={`${reducedMotion ? 'initial' : 'hover'}`}
+      whileHover={`${reducedMotion || dontAnimate ? 'initial' : 'hover'}`}
       variants={buttonVariants}
-      className={`flex aspect-square h-14 items-center justify-center overflow-hidden bg-orange text-white ${styles}`}
+      className={`flex aspect-square h-14 items-center justify-center overflow-hidden bg-orange text-white ${styles} ${
+        dontAnimate && 'transition-colors hover:text-black'
+      }`}
       onClick={handleClick}
     >
       {children}

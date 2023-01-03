@@ -17,8 +17,12 @@ const NewRecipe: NextPage<
   const router = useRouter();
 
   return (
-    <div className='h-[calc(100vh_-_var(--navbar-height))] border-t border-beige bg-black p-6'>
-      <Button handleClick={() => router.back()} variant='secondary'>
+    <div className='relative h-[calc(100vh_-_var(--navbar-height))] border-t border-beige bg-black p-6'>
+      <Button
+        handleClick={() => router.back()}
+        variant='secondary'
+        styles='absolute top-0 left-0 m-6 md:m-10'
+      >
         <span className='font-montserrat font-light'>back to your recipes</span>
       </Button>
       <NewRecipeForm />
