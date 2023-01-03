@@ -1,5 +1,9 @@
-import { type GetServerSidePropsContext } from 'next';
-import { unstable_getServerSession } from 'next-auth';
+import {
+  type GetServerSideProps,
+  type InferGetServerSidePropsType,
+  type GetServerSidePropsContext,
+} from 'next';
+import { unstable_getServerSession, type Session } from 'next-auth';
 
 import { authOptions } from '../../pages/api/auth/[...nextauth]';
 
@@ -13,3 +17,9 @@ export const getServerAuthSession = async (ctx: {
 }) => {
   return await unstable_getServerSession(ctx.req, ctx.res, authOptions);
 };
+
+// Custom gSSP with getServerAuthSession type inference
+export type InferGSSPWithSession<T extends GetServerSideProps> =
+  InferGetServerSidePropsType<T> extends { session: Session | null }
+    ? Omit<InferGetServerSidePropsType<T>, 'session'>
+    : InferGetServerSidePropsType<T>;
