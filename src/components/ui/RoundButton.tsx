@@ -27,18 +27,27 @@ const RoundButton: FC<ButtonProps> = ({
   const reducedMotion = useReducedMotion();
 
   return (
-    <motion.button
-      initial='initial'
-      animate='initial'
-      whileHover={`${reducedMotion || dontAnimate ? 'initial' : 'hover'}`}
-      variants={buttonVariants}
-      className={`flex aspect-square h-14 items-center justify-center overflow-hidden bg-orange text-white ${styles} ${
-        dontAnimate && 'transition-colors hover:text-black'
-      }`}
-      onClick={handleClick}
-    >
-      {children}
-    </motion.button>
+    <>
+      {!dontAnimate ? (
+        <motion.button
+          initial='initial'
+          animate='initial'
+          whileHover={`${reducedMotion ? 'initial' : 'hover'}`}
+          variants={buttonVariants}
+          className={`flex aspect-square h-14 items-center justify-center overflow-hidden bg-orange text-white ${styles}`}
+          onClick={handleClick}
+        >
+          {children}
+        </motion.button>
+      ) : (
+        <button
+          className={`flex aspect-square h-12 items-center justify-center overflow-hidden rounded-xl bg-gray text-sm text-white transition-colors hover:bg-green ${styles}`}
+          onClick={handleClick}
+        >
+          {children}
+        </button>
+      )}
+    </>
   );
 };
 
