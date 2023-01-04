@@ -41,7 +41,7 @@ const RoundButton: FC<ButtonProps> = ({
         </motion.button>
       ) : (
         <button
-          className={`flex aspect-square h-12 items-center justify-center overflow-hidden rounded-xl bg-gray text-sm text-white transition-colors hover:bg-green ${className}`}
+          className={`flex aspect-square h-12 items-center justify-center overflow-hidden rounded-xl bg-orange text-sm text-white transition-colors hover:bg-brown ${className}`}
           onClick={handleClick}
         >
           {children}
