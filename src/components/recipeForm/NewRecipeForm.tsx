@@ -4,6 +4,7 @@ import RoundButton from '../ui/RoundButton';
 import GeneralInfo from './GeneralInfo';
 import type { Ingredient } from '@prisma/client';
 import Instructions from './Instructions';
+import { AnimatePresence } from 'framer-motion';
 
 export type FormState = {
   title: string;
@@ -27,8 +28,12 @@ const NewRecipeForm: FC = () => {
   const [formState, setFormState] = useState(defaultFormState);
 
   const forms = [
-    <GeneralInfo state={formState} setState={setFormState} key={0} />,
-    <Instructions state={formState} setState={setFormState} key={1} />,
+    <AnimatePresence key={0}>
+      <GeneralInfo state={formState} setState={setFormState} />
+    </AnimatePresence>,
+    <AnimatePresence key={1}>
+      <Instructions state={formState} setState={setFormState} />
+    </AnimatePresence>,
   ];
 
   const { currentElement, currentStep, nextStep, prevStep, isFirst, isLast } =
