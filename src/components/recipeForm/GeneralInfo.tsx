@@ -24,10 +24,11 @@ const GeneralInfo: FC<GeneralInfoProps> = ({ state, setState }) => {
 
     if (name === '' || value === '') {
       setIngredientError("Name and Quantity can't be empty.");
+      return;
     }
 
     if (state.ingredients.some(ingredient => ingredient.name === name)) {
-      setIngredientError(prev => prev + ' Name must be unique.');
+      setIngredientError('Name must be unique.');
       return;
     }
 

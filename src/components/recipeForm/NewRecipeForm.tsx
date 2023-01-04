@@ -2,7 +2,7 @@ import { useState, type FC } from 'react';
 import { useMultistepForm } from '../../hooks/useMultistepForm';
 import RoundButton from '../ui/RoundButton';
 import GeneralInfo from './GeneralInfo';
-import type { Ingredient } from '@prisma/client';
+import type { Ingredient, Step } from '@prisma/client';
 import Instructions from './Instructions';
 import { AnimatePresence } from 'framer-motion';
 
@@ -12,7 +12,10 @@ export type FormState = {
   ingredientName: string;
   ingredientValue: string;
   ingredientUnit: string;
+  stepName: string;
+
   ingredients: Omit<Ingredient, 'id'>[];
+  steps: Pick<Step, 'instructions'>[];
 };
 
 const defaultFormState: FormState = {
@@ -21,7 +24,10 @@ const defaultFormState: FormState = {
   ingredientName: '',
   ingredientValue: '',
   ingredientUnit: '',
+  stepName: '',
+
   ingredients: [],
+  steps: [],
 };
 
 const NewRecipeForm: FC = () => {
@@ -79,11 +85,6 @@ const NavigationBtn: FC<NavigationBtnProps> = ({
         e.preventDefault();
         navigate();
       }}
-      className={`shrink-0 ${
-        disabled
-          ? 'cursor-not-allowed bg-neutral-900 text-neutral-700 hover:bg-neutral-900 hover:text-neutral-700'
-          : ''
-      }`}
       disabled={disabled}
     >
       {children}
