@@ -1,4 +1,6 @@
 import React, { type MouseEvent, useState, type FC } from 'react';
+import { z } from 'zod';
+import parseSchema from '../../utils/zod';
 import Button from '../ui/Button';
 import ErrorMessage from '../ui/ErrorMessage';
 import FormWrapper from '../ui/FormWrapper';
@@ -11,23 +13,36 @@ type GeneralInfoProps = {
   setState: React.Dispatch<React.SetStateAction<FormState>>;
 };
 
+const ingredientSchema = z.object({
+  name: z.string().min(1, "Name can't be empty"),
+  value: z.string().min(1, "Value can't be empty"),
+  unit: z.string().nullable(),
+});
+
 const GeneralInfo: FC<GeneralInfoProps> = ({ state, setState }) => {
   const [ingredientError, setIngredientError] = useState<undefined | string>();
 
   function addIngredient(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    const {
-      ingredientName: name,
-      ingredientUnit: unit,
-      ingredientValue: value,
-    } = state;
 
-    if (name === '' || value === '') {
-      setIngredientError("Name and Quantity can't be empty.");
+    const data = {
+      name: state.ingredientName,
+      value: state.ingredientValue,
+      unit: state.ingredientUnit,
+    };
+
+    const result = parseSchema(ingredientSchema, data);
+
+    if (typeof result === 'string') {
+      setIngredientError(result);
       return;
     }
 
-    if (state.ingredients.some(ingredient => ingredient.name === name)) {
+    if (
+      state.ingredients.some(
+        ingredient => ingredient.name === state.ingredientName
+      )
+    ) {
       setIngredientError('Name must be unique.');
       return;
     }
@@ -39,11 +54,7 @@ const GeneralInfo: FC<GeneralInfoProps> = ({ state, setState }) => {
       ingredientValue: '',
       ingredients: [
         ...prev.ingredients,
-        {
-          name,
-          unit,
-          value: parseInt(value),
-        },
+        { ...data, value: parseInt(data.value) },
       ],
     }));
 

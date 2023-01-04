@@ -1,4 +1,6 @@
 import React, { type MouseEvent, useState, type FC } from 'react';
+import { z } from 'zod';
+import parseSchema from '../../utils/zod';
 import Button from '../ui/Button';
 import ErrorMessage from '../ui/ErrorMessage';
 import FormWrapper from '../ui/FormWrapper';
@@ -11,6 +13,10 @@ type InstructionsProps = {
   setState: React.Dispatch<React.SetStateAction<FormState>>;
 };
 
+const stepInstructionSchema = z
+  .string({ required_error: "Step instructions can't be empty." })
+  .min(6, 'Step instructions must be at least 6 characters long.');
+
 const Instructions: FC<InstructionsProps> = ({ state, setState }) => {
   const [stepError, setStepError] = useState<string | undefined>();
 
@@ -18,8 +24,9 @@ const Instructions: FC<InstructionsProps> = ({ state, setState }) => {
     e.preventDefault();
     const { stepName: instructions } = state;
 
-    if (instructions === '') {
-      setStepError("Step instructions can't be empty.");
+    const result = parseSchema(stepInstructionSchema, instructions);
+    if (typeof result === 'string') {
+      setStepError(result);
       return;
     }
 
@@ -30,6 +37,7 @@ const Instructions: FC<InstructionsProps> = ({ state, setState }) => {
 
     setState(prev => ({
       ...prev,
+      stepName: '',
       steps: [
         ...prev.steps,
         {
