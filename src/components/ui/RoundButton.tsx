@@ -21,7 +21,7 @@ const buttonVariants: Variants = {
 const RoundButton: FC<ButtonProps> = ({
   children,
   handleClick = () => null,
-  styles,
+  className,
   dontAnimate = false,
 }) => {
   const reducedMotion = useReducedMotion();
@@ -34,14 +34,14 @@ const RoundButton: FC<ButtonProps> = ({
           animate='initial'
           whileHover={`${reducedMotion ? 'initial' : 'hover'}`}
           variants={buttonVariants}
-          className={`flex aspect-square h-14 items-center justify-center overflow-hidden bg-orange text-white ${styles}`}
+          className={`flex aspect-square h-14 items-center justify-center overflow-hidden bg-orange text-white ${className}`}
           onClick={handleClick}
         >
           {children}
         </motion.button>
       ) : (
         <button
-          className={`flex aspect-square h-12 items-center justify-center overflow-hidden rounded-xl bg-gray text-sm text-white transition-colors hover:bg-green ${styles}`}
+          className={`flex aspect-square h-12 items-center justify-center overflow-hidden rounded-xl bg-gray text-sm text-white transition-colors hover:bg-green ${className}`}
           onClick={handleClick}
         >
           {children}

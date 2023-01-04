@@ -25,7 +25,7 @@ const Hero: FC<HeroProps> = ({ scrollToRef }) => {
               behavior: 'smooth',
             })
           }
-          styles='mx-auto mt-6'
+          className='mx-auto mt-6'
         >
           <>
             <span className='text-lg'>learn more</span>

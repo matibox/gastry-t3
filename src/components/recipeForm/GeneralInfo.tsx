@@ -1,15 +1,65 @@
-import { type FC } from 'react';
+import React, { type MouseEvent, useState, type FC } from 'react';
+import Button from '../ui/Button';
+import ErrorMessage from '../ui/ErrorMessage';
 import FormWrapper from '../ui/FormWrapper';
 import Input from '../ui/Input';
 import Label from '../ui/Label';
-import { FormState } from './NewRecipeForm';
+import { type FormState } from './NewRecipeForm';
 
 type GeneralInfoProps = {
   state: FormState;
-  updateState: <T extends FormState>(values: T) => void;
+  setState: React.Dispatch<React.SetStateAction<FormState>>;
 };
 
-const GeneralInfo: FC<GeneralInfoProps> = ({ state, updateState }) => {
+const GeneralInfo: FC<GeneralInfoProps> = ({ state, setState }) => {
+  const [ingredientError, setIngredientError] = useState<undefined | string>();
+
+  function addIngredient(e: MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    const {
+      ingredientName: name,
+      ingredientUnit: unit,
+      ingredientValue: value,
+    } = state;
+
+    if (name === '' || value === '') {
+      setIngredientError("Name and Quantity can't be empty.");
+    }
+
+    if (state.ingredients.some(ingredient => ingredient.name === name)) {
+      setIngredientError(prev => prev + ' Name must be unique.');
+      return;
+    }
+
+    setState(prev => ({
+      ...prev,
+      ingredientName: '',
+      ingredientUnit: '',
+      ingredientValue: '',
+      ingredients: [
+        ...prev.ingredients,
+        {
+          name,
+          unit,
+          value: parseInt(value),
+        },
+      ],
+    }));
+
+    setIngredientError(undefined);
+  }
+
+  function removeIngredient(ingredientName: string) {
+    setState(prev => ({
+      ...prev,
+      ingredients: prev.ingredients.filter(
+        ingredient => ingredient.name !== ingredientName
+      ),
+    }));
+
+    setIngredientError(undefined);
+  }
+
   return (
     <FormWrapper subtitle='General Info'>
       <>
@@ -22,7 +72,9 @@ const GeneralInfo: FC<GeneralInfoProps> = ({ state, updateState }) => {
             <Input
               type='text'
               value={state.title}
-              onChange={e => updateState({ title: e.target.value })}
+              onChange={e =>
+                setState(prev => ({ ...prev, title: e.target.value }))
+              }
             />
           </>
         </Label>
@@ -34,15 +86,107 @@ const GeneralInfo: FC<GeneralInfoProps> = ({ state, updateState }) => {
             </div>
             <Input
               type='number'
+              min='0'
               value={state.cookingTime}
-              onChange={e => updateState({ cookingTime: e.target.value })}
+              onChange={e =>
+                setState(prev => ({ ...prev, cookingTime: e.target.value }))
+              }
             />
           </>
         </Label>
-        <Label>
-          <span>Ingredients</span>
-          {/*//TODO ingredients */}
-        </Label>
+        <div className='border-t-[1px] border-dark-gray pt-2'>
+          <div className='mt-1 grid grid-cols-2 gap-x-4 gap-y-2'>
+            <Label>
+              <>
+                <div className='flex flex-col'>
+                  <span>Name</span>
+                  <span className='text-sm text-dark-gray'>i.e. bread</span>
+                </div>
+                <Input
+                  type='text'
+                  className=''
+                  value={state.ingredientName}
+                  onChange={e =>
+                    setState(prev => ({
+                      ...prev,
+                      ingredientName: e.target.value,
+                    }))
+                  }
+                />
+              </>
+            </Label>
+            <Label>
+              <>
+                <div className='flex flex-col'>
+                  <span>Quantity</span>
+                  <span className='text-sm text-dark-gray'>
+                    i.e. 2, 3, 250, 500
+                  </span>
+                </div>
+                <Input
+                  type='number'
+                  min='0'
+                  className=''
+                  value={state.ingredientValue}
+                  onChange={e =>
+                    setState(prev => ({
+                      ...prev,
+                      ingredientValue: e.target.value,
+                    }))
+                  }
+                />
+              </>
+            </Label>
+            <Label>
+              <>
+                <div className='flex flex-col'>
+                  <span>Unit</span>
+                  <span className='text-sm text-dark-gray'>
+                    i.e. grams, g, ml, liters
+                  </span>
+                </div>
+                <Input
+                  type='text'
+                  className=''
+                  value={state.ingredientUnit}
+                  onChange={e =>
+                    setState(prev => ({
+                      ...prev,
+                      ingredientUnit: e.target.value,
+                    }))
+                  }
+                />
+              </>
+            </Label>
+            <Button
+              handleClick={addIngredient}
+              className='h-min self-end rounded'
+            >
+              Add ingredient
+            </Button>
+          </div>
+          <div className='mt-4'>
+            {ingredientError && <ErrorMessage error={ingredientError} />}
+            <p
+              className={`text-sm md:text-base ${
+                ingredientError ? 'mt-2' : ''
+              }`}
+            >
+              <span className='text-orange'>Ingredients: </span>
+              {state.ingredients?.map((ingredient, i) => (
+                <span
+                  key={ingredient.name}
+                  className='cursor-pointer transition-colors hover:text-brown'
+                  title='remove ingredient'
+                  onClick={() => removeIngredient(ingredient.name)}
+                >
+                  {ingredient.name} - {ingredient.value} {ingredient.unit}
+                  {i !== state.ingredients.length - 1 && <>, </>}
+                </span>
+              ))}
+            </p>
+          </div>
+        </div>
       </>
     </FormWrapper>
   );

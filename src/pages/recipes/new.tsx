@@ -21,7 +21,7 @@ const NewRecipe: NextPage<
       <Button
         handleClick={() => router.back()}
         variant='secondary'
-        styles='absolute top-0 left-0 m-6 md:m-10'
+        className='absolute top-0 left-0 m-6 md:m-10'
       >
         <span className='font-montserrat font-light'>back to your recipes</span>
       </Button>
