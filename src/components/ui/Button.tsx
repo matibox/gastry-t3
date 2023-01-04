@@ -6,6 +6,7 @@ export type ButtonProps = {
   className?: string;
   variant?: 'normal' | 'secondary';
   dontAnimate?: boolean;
+  disabled?: boolean;
 };
 
 const Button: FC<ButtonProps> = ({
@@ -13,6 +14,7 @@ const Button: FC<ButtonProps> = ({
   handleClick = () => null,
   className,
   variant = 'normal',
+  disabled = false,
 }) => {
   return (
     <button
@@ -22,6 +24,7 @@ const Button: FC<ButtonProps> = ({
           : 'flex items-center justify-center gap-4 border-b border-b-beige font-open-sans text-white transition-colors  hover:text-beige md:text-lg'
       } ${className}`}
       onClick={handleClick}
+      disabled={disabled}
     >
       {children}
     </button>

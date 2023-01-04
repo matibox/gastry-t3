@@ -3,6 +3,7 @@ import { useMultistepForm } from '../../hooks/useMultistepForm';
 import RoundButton from '../ui/RoundButton';
 import GeneralInfo from './GeneralInfo';
 import type { Ingredient } from '@prisma/client';
+import Instructions from './Instructions';
 
 export type FormState = {
   title: string;
@@ -27,6 +28,7 @@ const NewRecipeForm: FC = () => {
 
   const forms = [
     <GeneralInfo state={formState} setState={setFormState} key={0} />,
+    <Instructions state={formState} setState={setFormState} key={1} />,
   ];
 
   const { currentElement, currentStep, nextStep, prevStep, isFirst, isLast } =
@@ -37,14 +39,18 @@ const NewRecipeForm: FC = () => {
       <h1 className='text-3xl lg:text-4xl'>New Recipe</h1>
       {currentElement}
       <div className='absolute bottom-0 left-0 flex w-full justify-between p-6 md:left-1/2 md:max-w-xl md:-translate-x-1/2 md:p-0 md:pb-10 portrait:static portrait:mt-4 portrait:translate-x-0'>
-        {isFirst && <NavigationBtn navigate={prevStep}>prev</NavigationBtn>}
+        <NavigationBtn navigate={prevStep} disabled={isFirst}>
+          prev
+        </NavigationBtn>
         <div className='flex flex-col text-center'>
           <span>Step</span>
           <span>
             {currentStep + 1} / {forms.length}
           </span>
         </div>
-        {isLast && <NavigationBtn navigate={nextStep}>next</NavigationBtn>}
+        <NavigationBtn navigate={nextStep} disabled={isLast}>
+          next
+        </NavigationBtn>
       </div>
     </form>
   );
@@ -53,9 +59,14 @@ const NewRecipeForm: FC = () => {
 type NavigationBtnProps = {
   children: JSX.Element | string;
   navigate: () => void;
+  disabled: boolean;
 };
 
-const NavigationBtn: FC<NavigationBtnProps> = ({ children, navigate }) => {
+const NavigationBtn: FC<NavigationBtnProps> = ({
+  children,
+  navigate,
+  disabled,
+}) => {
   return (
     <RoundButton
       dontAnimate
@@ -63,7 +74,12 @@ const NavigationBtn: FC<NavigationBtnProps> = ({ children, navigate }) => {
         e.preventDefault();
         navigate();
       }}
-      className='shrink-0'
+      className={`shrink-0 ${
+        disabled
+          ? 'cursor-not-allowed bg-neutral-900 text-neutral-700 hover:bg-neutral-900 hover:text-neutral-700'
+          : ''
+      }`}
+      disabled={disabled}
     >
       {children}
     </RoundButton>
