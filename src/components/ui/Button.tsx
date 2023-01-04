@@ -1,8 +1,8 @@
-import { type FC } from 'react';
+import { MouseEvent, type FC } from 'react';
 
 export type ButtonProps = {
   children: JSX.Element | string;
-  handleClick?: () => void;
+  handleClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   styles?: string;
   variant?: 'normal' | 'secondary';
   dontAnimate?: boolean;
