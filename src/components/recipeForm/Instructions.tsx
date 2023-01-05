@@ -17,6 +17,10 @@ const stepInstructionSchema = z
   .string({ required_error: "Step instructions can't be empty." })
   .min(6, 'Step instructions must be at least 6 characters long.');
 
+export const instructionsNextStep = z.object({
+  steps: z.array(z.any()).min(1, 'Steps are required'),
+});
+
 const Instructions: FC<InstructionsProps> = ({ state, setState }) => {
   const [stepError, setStepError] = useState<string | undefined>();
 

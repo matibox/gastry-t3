@@ -19,6 +19,12 @@ const ingredientSchema = z.object({
   unit: z.string().nullable(),
 });
 
+export const generalInfoNextStep = z.object({
+  title: z.string().min(6, 'Title must be at least 6 characters long'),
+  cookingTime: z.string().min(1, 'Cooking time is required'),
+  ingredients: z.array(z.any()).min(1, 'Ingredients are required'),
+});
+
 const GeneralInfo: FC<GeneralInfoProps> = ({ state, setState }) => {
   const [ingredientError, setIngredientError] = useState<undefined | string>();
 

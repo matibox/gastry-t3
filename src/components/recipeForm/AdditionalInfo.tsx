@@ -16,9 +16,9 @@ const acceptedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
 const imageSchema = z
   .any()
-  .refine(files => files?.[0]?.size >= 2048, "Image size can't exceed 2MB")
+  .refine(file => file?.size <= 2000000, "Image size can't exceed 2MB")
   .refine(
-    files => acceptedTypes.includes(files?.[0]?.type),
+    file => acceptedTypes.includes(file?.type),
     `Only .jpeg, .jpg, .png and .webp files are accepted`
   );
 
@@ -40,6 +40,7 @@ const AdditionalInfo: FC<AdditionalInfoProps> = ({ state, setState }) => {
       ...prev,
       image: file,
     }));
+    setFileError(undefined);
   }
 
   return (

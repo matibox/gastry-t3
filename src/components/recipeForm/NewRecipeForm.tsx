@@ -1,11 +1,12 @@
-import { useState, type FC } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { useMultistepForm } from '../../hooks/useMultistepForm';
 import RoundButton from '../ui/RoundButton';
-import GeneralInfo from './GeneralInfo';
+import GeneralInfo, { generalInfoNextStep } from './GeneralInfo';
 import type { Ingredient, Step } from '@prisma/client';
-import Instructions from './Instructions';
+import Instructions, { instructionsNextStep } from './Instructions';
 import { AnimatePresence } from 'framer-motion';
 import AdditionalInfo from './AdditionalInfo';
+import ErrorMessage from '../ui/ErrorMessage';
 
 export type FormState = {
   title: string;
@@ -41,10 +42,14 @@ const defaultFormState: FormState = {
 
 const NewRecipeForm: FC = () => {
   const [formState, setFormState] = useState(defaultFormState);
+  const [formError, setFormError] = useState<string | undefined>();
 
-  //TODO * - marked as required
+  useEffect(() => {
+    const timeout = setTimeout(() => setFormError(undefined), 10000);
+    return () => clearTimeout(timeout);
+  }, [formError]);
+
   //TODO next step - visibility
-  //TODO step validation on next/prev click
 
   const forms = [
     <AnimatePresence key={0}>
@@ -59,13 +64,39 @@ const NewRecipeForm: FC = () => {
   ];
 
   const { currentElement, currentStep, nextStep, prevStep, isFirst, isLast } =
-    useMultistepForm(forms);
+    useMultistepForm(
+      forms,
+      [
+        {
+          schema: generalInfoNextStep,
+          dataToCheck: {
+            title: formState.title,
+            cookingTime: formState.cookingTime,
+            ingredients: formState.ingredients,
+          },
+        },
+        {
+          schema: instructionsNextStep,
+          dataToCheck: {
+            steps: formState.steps,
+          },
+        },
+        {
+          schema: undefined,
+          dataToCheck: undefined,
+        },
+      ],
+      setFormError
+    );
 
   return (
     <form className='flex h-full w-full flex-col items-center pt-16 font-montserrat text-white lg:pt-20'>
       <h1 className='text-3xl lg:text-4xl'>New Recipe</h1>
       {currentElement}
-      <div className='portrait:mt-4portrait:lg:static absolute bottom-0 left-0 flex w-full justify-between p-6 md:left-1/2 md:max-w-xl md:-translate-x-1/2 md:p-0 md:pb-10'>
+      {formError && (
+        <ErrorMessage error={formError} className='mt-auto mb-24' />
+      )}
+      <div className='absolute bottom-0 left-0 flex w-full justify-between p-6 md:left-1/2 md:max-w-xl md:-translate-x-1/2 md:p-0 md:pb-10'>
         <NavigationBtn navigate={prevStep} disabled={isFirst}>
           prev
         </NavigationBtn>
