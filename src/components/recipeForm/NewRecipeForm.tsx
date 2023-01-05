@@ -5,6 +5,7 @@ import GeneralInfo from './GeneralInfo';
 import type { Ingredient, Step } from '@prisma/client';
 import Instructions from './Instructions';
 import { AnimatePresence } from 'framer-motion';
+import AdditionalInfo from './AdditionalInfo';
 
 export type FormState = {
   title: string;
@@ -13,6 +14,10 @@ export type FormState = {
   ingredientValue: string;
   ingredientUnit: string;
   stepName: string;
+  image: null | File;
+  vegetarian: boolean;
+  vegan: boolean;
+  spicy: boolean;
 
   ingredients: Omit<Ingredient, 'id'>[];
   steps: Pick<Step, 'instructions'>[];
@@ -25,6 +30,10 @@ const defaultFormState: FormState = {
   ingredientValue: '',
   ingredientUnit: '',
   stepName: '',
+  image: null,
+  vegetarian: false,
+  vegan: false,
+  spicy: false,
 
   ingredients: [],
   steps: [],
@@ -39,6 +48,9 @@ const NewRecipeForm: FC = () => {
     </AnimatePresence>,
     <AnimatePresence key={1}>
       <Instructions state={formState} setState={setFormState} />
+    </AnimatePresence>,
+    <AnimatePresence key={2}>
+      <AdditionalInfo state={formState} setState={setFormState} />
     </AnimatePresence>,
   ];
 

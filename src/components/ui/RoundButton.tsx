@@ -44,7 +44,7 @@ const RoundButton: FC<ButtonProps> = ({
         </motion.button>
       ) : (
         <button
-          className={`flex aspect-square h-12 items-center justify-center overflow-hidden rounded-xl bg-orange text-sm text-white transition-colors disabled:cursor-not-allowed disabled:bg-neutral-900 disabled:text-neutral-700 hover:bg-brown hover:text-neutral-700 disabled:hover:bg-neutral-900
+          className={`flex aspect-square h-12 items-center justify-center overflow-hidden rounded-xl bg-orange text-sm text-white transition-colors disabled:cursor-not-allowed disabled:bg-neutral-900 disabled:text-neutral-700 hover:bg-brown disabled:hover:bg-neutral-900
           ${className}`}
           onClick={handleClick}
           disabled={disabled}

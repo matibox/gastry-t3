@@ -93,7 +93,7 @@ const GeneralInfo: FC<GeneralInfoProps> = ({ state, setState }) => {
         <Label>
           <>
             <div className='flex flex-col'>
-              <span>Cooking Time</span>
+              <span>Cooking time</span>
               <span className='text-sm text-dark-gray'>in minutes</span>
             </div>
             <Input
