@@ -61,8 +61,8 @@ const Instructions: FC<InstructionsProps> = ({ state, setState }) => {
   return (
     <FormWrapper subtitle='Instructions'>
       <>
-        <div className='flex justify-between gap-4'>
-          <Label className='shrink basis-3/4'>
+        <div className='flex flex-col items-start justify-start gap-4 sm:flex-row sm:justify-between'>
+          <Label className='w-full shrink sm:w-3/4'>
             <>
               <div className='flex flex-col'>
                 <span>Step instructions</span>
@@ -79,7 +79,10 @@ const Instructions: FC<InstructionsProps> = ({ state, setState }) => {
               />
             </>
           </Label>
-          <Button className='h-min w-40 self-end rounded' handleClick={addStep}>
+          <Button
+            className='h-min w-full rounded sm:w-40 sm:self-end'
+            handleClick={addStep}
+          >
             Add new step
           </Button>
         </div>

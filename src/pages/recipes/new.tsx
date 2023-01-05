@@ -12,7 +12,7 @@ import {
 const NewRecipe: NextPage<
   InferGSSPWithSession<typeof getServerSideProps>
 > = () => {
-  const { data: session } = useSession() as { data: Session };
+  const { data: session } = useSession();
 
   const router = useRouter();
 

@@ -49,7 +49,7 @@ const NewRecipeForm: FC = () => {
     <form className='flex h-full w-full flex-col items-center pt-16 font-montserrat text-white lg:pt-20'>
       <h1 className='text-3xl lg:text-4xl'>New Recipe</h1>
       {currentElement}
-      <div className='absolute bottom-0 left-0 flex w-full justify-between p-6 md:left-1/2 md:max-w-xl md:-translate-x-1/2 md:p-0 md:pb-10 portrait:static portrait:mt-4 portrait:translate-x-0'>
+      <div className='portrait:mt-4portrait:lg:static absolute bottom-0 left-0 flex w-full justify-between p-6 md:left-1/2 md:max-w-xl md:-translate-x-1/2 md:p-0 md:pb-10'>
         <NavigationBtn navigate={prevStep} disabled={isFirst}>
           prev
         </NavigationBtn>
