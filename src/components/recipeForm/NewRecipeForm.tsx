@@ -42,6 +42,10 @@ const defaultFormState: FormState = {
 const NewRecipeForm: FC = () => {
   const [formState, setFormState] = useState(defaultFormState);
 
+  //TODO * - marked as required
+  //TODO next step - visibility
+  //TODO step validation on next/prev click
+
   const forms = [
     <AnimatePresence key={0}>
       <GeneralInfo state={formState} setState={setFormState} />

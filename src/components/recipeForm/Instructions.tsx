@@ -90,7 +90,7 @@ const Instructions: FC<InstructionsProps> = ({ state, setState }) => {
           {stepError && <ErrorMessage error={stepError} />}
           <div>
             <span className={`text-orange ${stepError ? 'mt-2' : ''}`}>
-              Steps:{' '}
+              <span className='text-gray'>*</span> Steps:{' '}
             </span>
             <ol className='max-h-96 list-inside list-decimal overflow-auto scrollbar-thin scrollbar-track-black scrollbar-thumb-orange hover:scrollbar-thumb-brown'>
               {state.steps?.map(step => (

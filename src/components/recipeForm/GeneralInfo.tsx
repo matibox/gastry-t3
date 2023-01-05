@@ -78,7 +78,9 @@ const GeneralInfo: FC<GeneralInfoProps> = ({ state, setState }) => {
         <Label>
           <>
             <div className='flex flex-col'>
-              <span>Title</span>
+              <span>
+                Title<span className='text-gray'>*</span>
+              </span>
               <span className='text-sm text-dark-gray'>min. 6 characters</span>
             </div>
             <Input
@@ -93,7 +95,9 @@ const GeneralInfo: FC<GeneralInfoProps> = ({ state, setState }) => {
         <Label>
           <>
             <div className='flex flex-col'>
-              <span>Cooking time</span>
+              <span>
+                Cooking time<span className='text-gray'>*</span>
+              </span>
               <span className='text-sm text-dark-gray'>in minutes</span>
             </div>
             <Input
@@ -184,7 +188,9 @@ const GeneralInfo: FC<GeneralInfoProps> = ({ state, setState }) => {
                 ingredientError ? 'mt-2' : ''
               }`}
             >
-              <span className='text-orange'>Ingredients: </span>
+              <span className='text-orange'>
+                <span className='text-sm text-gray'>*</span> Ingredients:{' '}
+              </span>
               {state.ingredients?.map((ingredient, i) => (
                 <span
                   key={ingredient.name}
