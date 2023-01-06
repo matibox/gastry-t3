@@ -180,10 +180,7 @@ const GeneralInfo: FC<GeneralInfoProps> = ({ state, setState }) => {
                 />
               </>
             </Label>
-            <Button
-              handleClick={addIngredient}
-              className='h-min self-end rounded'
-            >
+            <Button onClick={addIngredient} className='h-min self-end rounded'>
               Add ingredient
             </Button>
           </div>

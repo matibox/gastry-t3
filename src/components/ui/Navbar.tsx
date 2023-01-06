@@ -56,9 +56,7 @@ const Navbar: FC = () => {
         </button>
       )}
       {status === 'loading' ||
-        (!session && (
-          <Button handleClick={() => signIn('google')}>sign in</Button>
-        ))}
+        (!session && <Button onClick={() => signIn('google')}>sign in</Button>)}
       <AnimatePresence>
         {menuOpened && session && <NavMenu session={session} />}
       </AnimatePresence>

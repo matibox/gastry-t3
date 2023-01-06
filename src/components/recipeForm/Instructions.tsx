@@ -85,7 +85,7 @@ const Instructions: FC<InstructionsProps> = ({ state, setState }) => {
           </Label>
           <Button
             className='h-min w-full rounded sm:w-40 sm:self-end'
-            handleClick={addStep}
+            onClick={addStep}
           >
             Add new step
           </Button>

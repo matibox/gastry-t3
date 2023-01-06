@@ -12,7 +12,7 @@ const SignIn: FC<SignInProps> = ({ text }) => {
       <h2 className='text-center font-montserrat text-2xl'>
         Sign in to {text}
       </h2>
-      <Button handleClick={() => signIn('google')} className='text-black'>
+      <Button onClick={() => signIn('google')} className='text-black'>
         sign in
       </Button>
     </div>

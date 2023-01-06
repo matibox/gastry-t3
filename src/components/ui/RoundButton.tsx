@@ -1,6 +1,10 @@
 import { type FC } from 'react';
-import { type ButtonProps } from './Button';
-import { motion, useReducedMotion, type Variants } from 'framer-motion';
+import {
+  type HTMLMotionProps,
+  motion,
+  useReducedMotion,
+  type Variants,
+} from 'framer-motion';
 
 const buttonVariants: Variants = {
   initial: {
@@ -18,12 +22,16 @@ const buttonVariants: Variants = {
   },
 };
 
-const RoundButton: FC<ButtonProps> = ({
+interface RoundButtonProps extends HTMLMotionProps<'button'> {
+  children: JSX.Element | string;
+  dontAnimate?: boolean;
+}
+
+const RoundButton: FC<RoundButtonProps> = ({
   children,
-  handleClick = () => null,
   className,
   dontAnimate = false,
-  disabled = false,
+  ...props
 }) => {
   const reducedMotion = useReducedMotion();
 
@@ -37,20 +45,18 @@ const RoundButton: FC<ButtonProps> = ({
           variants={buttonVariants}
           className={`flex aspect-square h-14 items-center justify-center overflow-hidden bg-orange text-white disabled:cursor-not-allowed disabled:bg-neutral-900 disabled:text-neutral-700 disabled:hover:bg-neutral-900 disabled:hover:text-neutral-700
           ${className}`}
-          onClick={handleClick}
-          disabled={disabled}
+          {...props}
         >
           {children}
         </motion.button>
       ) : (
-        <button
+        <motion.button
           className={`flex aspect-square h-12 items-center justify-center overflow-hidden rounded-xl bg-orange text-sm text-white transition-colors disabled:cursor-not-allowed disabled:bg-neutral-900 disabled:text-neutral-700 hover:bg-brown disabled:hover:bg-neutral-900
-          ${className}`}
-          onClick={handleClick}
-          disabled={disabled}
+        ${className}`}
+          {...props}
         >
           {children}
-        </button>
+        </motion.button>
       )}
     </>
   );

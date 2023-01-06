@@ -24,7 +24,7 @@ const NewRecipe: NextPage<
       </Head>
       <div className='flex min-h-[calc(100vh_-_var(--navbar-height))] flex-col gap-10 border-t border-beige bg-black p-6'>
         <Button
-          handleClick={() => router.back()}
+          onClick={() => router.back()}
           variant='secondary'
           className='self-start lg:ml-5 lg:mt-5'
         >

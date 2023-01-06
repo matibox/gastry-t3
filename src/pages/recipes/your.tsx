@@ -30,7 +30,7 @@ const YourRecipes: NextPage<
             </h1>
             <RoundButton
               className='fixed bottom-20 right-4'
-              handleClick={() => router.push('/recipes/new')}
+              onClick={() => router.push('/recipes/new')}
             >
               <svg
                 width='19'

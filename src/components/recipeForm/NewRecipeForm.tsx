@@ -1,13 +1,14 @@
-import { useEffect, useState, type FC } from 'react';
+import { type FormEvent, useEffect, useState, type FC, useRef } from 'react';
 import { useMultistepForm } from '../../hooks/useMultistepForm';
 import RoundButton from '../ui/RoundButton';
 import GeneralInfo, { generalInfoNextStep } from './GeneralInfo';
-import type { Ingredient, Step } from '@prisma/client';
+import type { Ingredient, RecipeType, Step } from '@prisma/client';
 import Instructions, { instructionsNextStep } from './Instructions';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, type HTMLMotionProps } from 'framer-motion';
 import AdditionalInfo from './AdditionalInfo';
 import ErrorMessage from '../ui/ErrorMessage';
 import Visibility from './Visibility';
+import { trpc } from '../../utils/trpc';
 
 export const visibilityOptions = [
   { type: 'public', description: 'Every user can see the recipe.' },
@@ -52,12 +53,12 @@ const NewRecipeForm: FC = () => {
   const [formState, setFormState] = useState(defaultFormState);
   const [formError, setFormError] = useState<string | undefined>();
 
+  const formRef = useRef<HTMLFormElement>(null);
+
   useEffect(() => {
     const timeout = setTimeout(() => setFormError(undefined), 10000);
     return () => clearTimeout(timeout);
   }, [formError]);
-
-  //TODO next step - visibility
 
   const forms = [
     <AnimatePresence key={0}>
@@ -100,15 +101,59 @@ const NewRecipeForm: FC = () => {
       setFormError
     );
 
+  const addRecipe = trpc.recipe.create.useMutation();
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    if (!isLast) return nextStep();
+
+    const {
+      cookingTime,
+      title,
+      ingredients,
+      steps,
+      vegetarian,
+      vegan,
+      spicy,
+      visibility,
+    } = formState;
+    const types: Omit<RecipeType, 'id'>[] = [];
+
+    if (vegetarian) types.push({ name: 'vegetarian' });
+    if (vegan) types.push({ name: 'vegan' });
+    if (spicy) types.push({ name: 'spicy' });
+
+    await addRecipe.mutateAsync({
+      cookingTime: parseInt(cookingTime),
+      title,
+      ingredients,
+      steps,
+      types,
+      visibility,
+    });
+
+    //TODO handle loading, error and success after recipe addition
+  }
+
   return (
     <>
-      <form className='flex w-full flex-col items-center font-montserrat text-white'>
+      <form
+        className='flex w-full flex-col items-center font-montserrat text-white'
+        onSubmit={handleSubmit}
+        ref={formRef}
+      >
         <h1 className='text-3xl lg:text-4xl'>New Recipe</h1>
         {currentElement}
         {formError && <ErrorMessage error={formError} className='mt-auto' />}
       </form>
       <div className='mx-auto mt-auto flex w-full max-w-xl justify-between font-montserrat text-white'>
-        <NavigationBtn navigate={prevStep} disabled={isFirst}>
+        <NavigationBtn
+          onClick={e => {
+            e.preventDefault();
+            prevStep();
+          }}
+          disabled={isFirst}
+        >
           prev
         </NavigationBtn>
         <div className='flex flex-col text-center'>
@@ -117,34 +162,27 @@ const NewRecipeForm: FC = () => {
             {currentStep + 1} / {forms.length}
           </span>
         </div>
-        <NavigationBtn navigate={nextStep} disabled={isLast}>
-          next
+        <NavigationBtn
+          onClick={() =>
+            formRef.current?.dispatchEvent(
+              new Event('submit', { cancelable: true, bubbles: true })
+            )
+          }
+        >
+          <>{isLast ? 'finish' : 'next'}</>
         </NavigationBtn>
       </div>
     </>
   );
 };
 
-type NavigationBtnProps = {
+interface NavigationBtnProps extends HTMLMotionProps<'button'> {
   children: JSX.Element | string;
-  navigate: () => void;
-  disabled: boolean;
-};
+}
 
-const NavigationBtn: FC<NavigationBtnProps> = ({
-  children,
-  navigate,
-  disabled,
-}) => {
+const NavigationBtn: FC<NavigationBtnProps> = ({ children, ...props }) => {
   return (
-    <RoundButton
-      dontAnimate
-      handleClick={e => {
-        e.preventDefault();
-        navigate();
-      }}
-      disabled={disabled}
-    >
+    <RoundButton dontAnimate {...props}>
       {children}
     </RoundButton>
   );

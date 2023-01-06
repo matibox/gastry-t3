@@ -20,7 +20,7 @@ const Hero: FC<HeroProps> = ({ scrollToRef }) => {
           textOptions={['nutrition app', 'recipe base', 'menu planner']}
         />
         <Button
-          handleClick={() =>
+          onClick={() =>
             scrollToRef.current?.scrollIntoView({
               behavior: 'smooth',
             })
