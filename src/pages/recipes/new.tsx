@@ -1,6 +1,7 @@
 import { type GetServerSideProps, type NextPage } from 'next';
 import { type Session } from 'next-auth';
 import { useSession } from 'next-auth/react';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import NewRecipeForm from '../../components/recipeForm/NewRecipeForm';
 import Button from '../../components/ui/Button';
@@ -17,16 +18,23 @@ const NewRecipe: NextPage<
   const router = useRouter();
 
   return (
-    <div className='relative h-[calc(100vh_-_var(--navbar-height))] border-t border-beige bg-black p-6'>
-      <Button
-        handleClick={() => router.back()}
-        variant='secondary'
-        className='absolute top-0 left-0 m-6 md:m-10'
-      >
-        <span className='font-montserrat font-light'>back to your recipes</span>
-      </Button>
-      <NewRecipeForm />
-    </div>
+    <>
+      <Head>
+        <title>New recipe - Gastry</title>
+      </Head>
+      <div className='flex min-h-[calc(100vh_-_var(--navbar-height))] flex-col gap-10 border-t border-beige bg-black p-6'>
+        <Button
+          handleClick={() => router.back()}
+          variant='secondary'
+          className='self-start lg:ml-5 lg:mt-5'
+        >
+          <span className='font-montserrat font-light'>
+            back to your recipes
+          </span>
+        </Button>
+        <NewRecipeForm />
+      </div>
+    </>
   );
 };
 

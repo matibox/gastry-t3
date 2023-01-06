@@ -90,13 +90,13 @@ const NewRecipeForm: FC = () => {
     );
 
   return (
-    <form className='flex h-full w-full flex-col items-center pt-16 font-montserrat text-white lg:pt-20'>
-      <h1 className='text-3xl lg:text-4xl'>New Recipe</h1>
-      {currentElement}
-      {formError && (
-        <ErrorMessage error={formError} className='mt-auto mb-24' />
-      )}
-      <div className='absolute bottom-0 left-0 flex w-full justify-between p-6 md:left-1/2 md:max-w-xl md:-translate-x-1/2 md:p-0 md:pb-10'>
+    <>
+      <form className='flex w-full flex-col items-center font-montserrat text-white'>
+        <h1 className='text-3xl lg:text-4xl'>New Recipe</h1>
+        {currentElement}
+        {formError && <ErrorMessage error={formError} className='mt-auto' />}
+      </form>
+      <div className='mx-auto mt-auto flex w-full max-w-xl justify-between font-montserrat text-white'>
         <NavigationBtn navigate={prevStep} disabled={isFirst}>
           prev
         </NavigationBtn>
@@ -110,7 +110,7 @@ const NewRecipeForm: FC = () => {
           next
         </NavigationBtn>
       </div>
-    </form>
+    </>
   );
 };
 

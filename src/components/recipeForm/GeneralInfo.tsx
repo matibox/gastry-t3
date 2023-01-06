@@ -87,7 +87,7 @@ const GeneralInfo: FC<GeneralInfoProps> = ({ state, setState }) => {
               <span>
                 Title<span className='text-gray'>*</span>
               </span>
-              <span className='text-sm text-dark-gray'>min. 6 characters</span>
+              <span className=' text-sm text-dark-gray'>min. 6 characters</span>
             </div>
             <Input
               type='text'
@@ -141,7 +141,7 @@ const GeneralInfo: FC<GeneralInfoProps> = ({ state, setState }) => {
               <>
                 <div className='flex flex-col'>
                   <span>Quantity</span>
-                  <span className='text-sm text-dark-gray'>
+                  <span className='truncate text-sm text-dark-gray'>
                     i.e. 2, 3, 250, 500
                   </span>
                 </div>
@@ -163,7 +163,7 @@ const GeneralInfo: FC<GeneralInfoProps> = ({ state, setState }) => {
               <>
                 <div className='flex flex-col'>
                   <span>Unit</span>
-                  <span className='text-sm text-dark-gray'>
+                  <span className='truncate text-sm text-dark-gray'>
                     i.e. grams, g, ml, liters
                   </span>
                 </div>
