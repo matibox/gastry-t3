@@ -7,6 +7,12 @@ import Instructions, { instructionsNextStep } from './Instructions';
 import { AnimatePresence } from 'framer-motion';
 import AdditionalInfo from './AdditionalInfo';
 import ErrorMessage from '../ui/ErrorMessage';
+import Visibility from './Visibility';
+
+export const visibilityOptions = [
+  { type: 'public', description: 'Every user can see the recipe.' },
+  { type: 'private', description: 'Only you can see the recipe.' },
+] as const;
 
 export type FormState = {
   title: string;
@@ -19,6 +25,7 @@ export type FormState = {
   vegetarian: boolean;
   vegan: boolean;
   spicy: boolean;
+  visibility: typeof visibilityOptions[number]['type'];
 
   ingredients: Omit<Ingredient, 'id'>[];
   steps: Pick<Step, 'instructions'>[];
@@ -35,6 +42,7 @@ const defaultFormState: FormState = {
   vegetarian: false,
   vegan: false,
   spicy: false,
+  visibility: visibilityOptions[0].type,
 
   ingredients: [],
   steps: [],
@@ -60,6 +68,9 @@ const NewRecipeForm: FC = () => {
     </AnimatePresence>,
     <AnimatePresence key={2}>
       <AdditionalInfo state={formState} setState={setFormState} />
+    </AnimatePresence>,
+    <AnimatePresence key={3}>
+      <Visibility state={formState} setState={setFormState} />
     </AnimatePresence>,
   ];
 

@@ -19,7 +19,9 @@ const FormWrapper: FC<FormWrapperProps> = ({ children, subtitle }) => {
       className='my-2 flex w-full max-w-xl flex-col gap-4 rounded-xl py-5 px-2 md:gap-5'
     >
       <div className='flex items-center justify-between'>
-        <h2 className='text-2xl font-light text-beige md:mb-2'>{subtitle}</h2>
+        <h2 className='text-xl font-light text-beige sm:text-2xl md:mb-2'>
+          {subtitle}
+        </h2>
         <span className='text-sm text-gray'>*required</span>
       </div>
       {children}
