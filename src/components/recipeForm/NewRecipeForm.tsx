@@ -9,6 +9,7 @@ import AdditionalInfo from './AdditionalInfo';
 import ErrorMessage from '../ui/ErrorMessage';
 import Visibility from './Visibility';
 import { trpc } from '../../utils/trpc';
+import Loading from '../ui/Loading';
 
 export const visibilityOptions = [
   { type: 'public', description: 'Every user can see the recipe.' },
@@ -137,6 +138,7 @@ const NewRecipeForm: FC = () => {
 
   return (
     <>
+      {addRecipe.isLoading && <Loading />}
       <form
         className='flex w-full flex-col items-center font-montserrat text-white'
         onSubmit={handleSubmit}
