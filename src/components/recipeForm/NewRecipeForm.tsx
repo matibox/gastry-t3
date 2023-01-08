@@ -133,12 +133,12 @@ const NewRecipeForm: FC = () => {
       visibility,
     });
 
-    //TODO handle loading, error and success after recipe addition
+    //TODO handle error and success after recipe addition
   }
 
   return (
     <>
-      {addRecipe.isLoading && <Loading />}
+      <Loading isLoading={addRecipe.isLoading} />
       <form
         className='flex w-full flex-col items-center font-montserrat text-white'
         onSubmit={handleSubmit}
