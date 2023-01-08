@@ -102,7 +102,11 @@ const NewRecipeForm: FC = () => {
       setFormError
     );
 
-  const addRecipe = trpc.recipe.create.useMutation();
+  const addRecipe = trpc.recipe.create.useMutation({
+    onError: err => {
+      setFormError(err.message);
+    },
+  });
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -133,7 +137,8 @@ const NewRecipeForm: FC = () => {
       visibility,
     });
 
-    //TODO handle error and success after recipe addition
+    //TODO handle success after recipe addition
+    //TODO lazy load form steps
   }
 
   return (
