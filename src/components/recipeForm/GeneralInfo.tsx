@@ -6,12 +6,7 @@ import ErrorMessage from '../ui/ErrorMessage';
 import FormWrapper from '../ui/FormWrapper';
 import Input from '../ui/Input';
 import Label from '../ui/Label';
-import { type FormState } from './NewRecipeForm';
-
-type GeneralInfoProps = {
-  state: FormState;
-  setState: React.Dispatch<React.SetStateAction<FormState>>;
-};
+import { type StepProps } from './NewRecipeForm';
 
 const ingredientSchema = z.object({
   name: z.string().min(1, "Name can't be empty"),
@@ -25,7 +20,7 @@ export const generalInfoNextStep = z.object({
   ingredients: z.array(z.any()).min(1, 'Ingredients are required'),
 });
 
-const GeneralInfo: FC<GeneralInfoProps> = ({ state, setState }) => {
+const GeneralInfo: FC<StepProps> = ({ state, setState }) => {
   const [ingredientError, setIngredientError] = useState<undefined | string>();
 
   function addIngredient(e: MouseEvent<HTMLButtonElement>) {

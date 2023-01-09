@@ -1,22 +1,35 @@
-import { type FormEvent, useEffect, useState, type FC, useRef } from 'react';
+import React, {
+  type FormEvent,
+  useEffect,
+  useState,
+  type FC,
+  useRef,
+  lazy,
+  Suspense,
+} from 'react';
 import { useMultistepForm } from '../../hooks/useMultistepForm';
 import RoundButton from '../ui/RoundButton';
-import GeneralInfo, { generalInfoNextStep } from './GeneralInfo';
+import { generalInfoNextStep } from './GeneralInfo';
 import type { Ingredient, RecipeType, Step } from '@prisma/client';
-import Instructions, { instructionsNextStep } from './Instructions';
+import { instructionsNextStep } from './Instructions';
 import { AnimatePresence, type HTMLMotionProps } from 'framer-motion';
-import AdditionalInfo from './AdditionalInfo';
 import ErrorMessage from '../ui/ErrorMessage';
-import Visibility from './Visibility';
 import { trpc } from '../../utils/trpc';
 import Loading from '../ui/Loading';
+import { visibilityOptions } from './Visibility';
 
-export const visibilityOptions = [
-  { type: 'public', description: 'Every user can see the recipe.' },
-  { type: 'private', description: 'Only you can see the recipe.' },
-] as const;
+// form steps
+const GeneralInfo = lazy(() => import('./GeneralInfo'));
+const Instructions = lazy(() => import('./Instructions'));
+const AdditionalInfo = lazy(() => import('./AdditionalInfo'));
+const Visibility = lazy(() => import('./Visibility'));
 
-export type FormState = {
+export type StepProps = {
+  state: FormState;
+  setState: React.Dispatch<React.SetStateAction<FormState>>;
+};
+
+type FormState = {
   title: string;
   cookingTime: string;
   ingredientName: string;
@@ -63,16 +76,24 @@ const NewRecipeForm: FC = () => {
 
   const forms = [
     <AnimatePresence key={0}>
-      <GeneralInfo state={formState} setState={setFormState} />
+      <Suspense fallback={null}>
+        <GeneralInfo state={formState} setState={setFormState} />
+      </Suspense>
     </AnimatePresence>,
     <AnimatePresence key={1}>
-      <Instructions state={formState} setState={setFormState} />
+      <Suspense fallback={null}>
+        <Instructions state={formState} setState={setFormState} />
+      </Suspense>
     </AnimatePresence>,
     <AnimatePresence key={2}>
-      <AdditionalInfo state={formState} setState={setFormState} />
+      <Suspense fallback={null}>
+        <AdditionalInfo state={formState} setState={setFormState} />
+      </Suspense>
     </AnimatePresence>,
     <AnimatePresence key={3}>
-      <Visibility state={formState} setState={setFormState} />
+      <Suspense fallback={null}>
+        <Visibility state={formState} setState={setFormState} />
+      </Suspense>
     </AnimatePresence>,
   ];
 
@@ -138,7 +159,6 @@ const NewRecipeForm: FC = () => {
     });
 
     //TODO handle success after recipe addition
-    //TODO lazy load form steps
   }
 
   return (

@@ -1,15 +1,14 @@
 import { RadioGroup } from '@headlessui/react';
 import { type FC } from 'react';
 import FormWrapper from '../ui/FormWrapper';
-import { type FormState } from './NewRecipeForm';
-import { visibilityOptions } from './NewRecipeForm';
+import { type StepProps } from './NewRecipeForm';
 
-type VisibilityProps = {
-  state: FormState;
-  setState: React.Dispatch<React.SetStateAction<FormState>>;
-};
+export const visibilityOptions = [
+  { type: 'public', description: 'Every user can see the recipe.' },
+  { type: 'private', description: 'Only you can see the recipe.' },
+] as const;
 
-const Visibility: FC<VisibilityProps> = ({ state, setState }) => {
+const Visibility: FC<StepProps> = ({ state, setState }) => {
   //TODO option with recipe being visible to specific group of friends
 
   return (

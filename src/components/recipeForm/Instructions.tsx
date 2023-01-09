@@ -1,4 +1,4 @@
-import React, { type MouseEvent, useState, type FC } from 'react';
+import { type MouseEvent, useState, type FC } from 'react';
 import { z } from 'zod';
 import parseSchema from '../../utils/zod';
 import Button from '../ui/Button';
@@ -6,12 +6,7 @@ import ErrorMessage from '../ui/ErrorMessage';
 import FormWrapper from '../ui/FormWrapper';
 import Input from '../ui/Input';
 import Label from '../ui/Label';
-import { type FormState } from './NewRecipeForm';
-
-type InstructionsProps = {
-  state: FormState;
-  setState: React.Dispatch<React.SetStateAction<FormState>>;
-};
+import { type StepProps } from './NewRecipeForm';
 
 const stepInstructionSchema = z
   .string({ required_error: "Step instructions can't be empty." })
@@ -21,7 +16,7 @@ export const instructionsNextStep = z.object({
   steps: z.array(z.any()).min(1, 'Steps are required'),
 });
 
-const Instructions: FC<InstructionsProps> = ({ state, setState }) => {
+const Instructions: FC<StepProps> = ({ state, setState }) => {
   const [stepError, setStepError] = useState<string | undefined>();
 
   function addStep(e: MouseEvent<HTMLButtonElement>) {

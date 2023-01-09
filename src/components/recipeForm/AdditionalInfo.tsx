@@ -5,12 +5,7 @@ import Checkbox from '../ui/Checkbox';
 import ErrorMessage from '../ui/ErrorMessage';
 import FormWrapper from '../ui/FormWrapper';
 import Label from '../ui/Label';
-import { type FormState } from './NewRecipeForm';
-
-type AdditionalInfoProps = {
-  state: FormState;
-  setState: React.Dispatch<React.SetStateAction<FormState>>;
-};
+import { type StepProps } from './NewRecipeForm';
 
 const acceptedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
@@ -22,7 +17,7 @@ const imageSchema = z
     `Only .jpeg, .jpg, .png and .webp files are accepted`
   );
 
-const AdditionalInfo: FC<AdditionalInfoProps> = ({ state, setState }) => {
+const AdditionalInfo: FC<StepProps> = ({ state, setState }) => {
   const [fileError, setFileError] = useState<undefined | string>(undefined);
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
