@@ -158,7 +158,7 @@ const NewRecipeForm: FC = () => {
       visibility,
     });
 
-    //TODO handle success after recipe addition
+    //TODO navigate to /recipes/new and display a modal after recipe creation success
   }
 
   return (
