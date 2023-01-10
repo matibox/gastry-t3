@@ -15,6 +15,8 @@ const Navbar: FC = () => {
   const btnRef = useRef<HTMLButtonElement>(null);
   useClickOutside(btnRef, setMenuOpened);
 
+  //TODO make logo with image and text instead of a whole image
+
   return (
     <div className='fixed top-0 left-0 z-50 flex h-[var(--navbar-height)] w-screen items-center justify-between bg-black px-5 md:px-16'>
       <Link href='/'>

@@ -17,6 +17,9 @@ import ErrorMessage from '../ui/ErrorMessage';
 import { trpc } from '../../utils/trpc';
 import Loading from '../ui/Loading';
 import { visibilityOptions } from './Visibility';
+import { useAtom } from 'jotai';
+import { modalAtom } from '../../global/atoms';
+import { useRouter } from 'next/router';
 
 // form steps
 const GeneralInfo = lazy(() => import('./GeneralInfo'));
@@ -66,6 +69,9 @@ const defaultFormState: FormState = {
 const NewRecipeForm: FC = () => {
   const [formState, setFormState] = useState(defaultFormState);
   const [formError, setFormError] = useState<string | undefined>();
+
+  const router = useRouter();
+  const [, setModal] = useAtom(modalAtom);
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -127,6 +133,10 @@ const NewRecipeForm: FC = () => {
     onError: err => {
       setFormError(err.message);
     },
+    onSuccess: () => {
+      setModal({ visible: true, message: 'Recipe successfully created' });
+      router.push('/recipes/your');
+    },
   });
 
   async function handleSubmit(e: FormEvent) {
@@ -158,7 +168,8 @@ const NewRecipeForm: FC = () => {
       visibility,
     });
 
-    //TODO navigate to /recipes/new and display a modal after recipe creation success
+    //TODO fix wrong type schema validation
+    //TODO add thumbnail storage
   }
 
   return (

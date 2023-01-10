@@ -33,7 +33,6 @@ const MyApp: AppType<{ session: Session | null }> = ({
 
   return (
     <SessionProvider session={session}>
-      <AnimatePresence>{modal.visible && <Modal />}</AnimatePresence>
       <nav
         className={`${montserrat.variable} ${openSans.variable} h-[var(--navbar-height)]`}
       >
@@ -42,6 +41,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
       <main
         className={`${montserrat.variable} ${openSans.variable} min-h-[calc(100vh_-_var(--navbar-height))]`}
       >
+        <AnimatePresence>{modal.visible && <Modal />}</AnimatePresence>
         <Component {...pageProps} />
       </main>
       <MobileMenu />
