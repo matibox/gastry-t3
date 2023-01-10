@@ -6,6 +6,7 @@ import React, {
   useRef,
   lazy,
   Suspense,
+  useMemo,
 } from 'react';
 import { useMultistepForm } from '../../hooks/useMultistepForm';
 import RoundButton from '../ui/RoundButton';
@@ -20,6 +21,7 @@ import { visibilityOptions } from './Visibility';
 import { useAtom } from 'jotai';
 import { modalAtom } from '../../global/atoms';
 import { useRouter } from 'next/router';
+import { useUploadImage } from '../../hooks/useUploadImage';
 
 // form steps
 const GeneralInfo = lazy(() => import('./GeneralInfo'));
@@ -80,28 +82,31 @@ const NewRecipeForm: FC = () => {
     return () => clearTimeout(timeout);
   }, [formError]);
 
-  const forms = [
-    <AnimatePresence key={0}>
-      <Suspense fallback={null}>
-        <GeneralInfo state={formState} setState={setFormState} />
-      </Suspense>
-    </AnimatePresence>,
-    <AnimatePresence key={1}>
-      <Suspense fallback={null}>
-        <Instructions state={formState} setState={setFormState} />
-      </Suspense>
-    </AnimatePresence>,
-    <AnimatePresence key={2}>
-      <Suspense fallback={null}>
-        <AdditionalInfo state={formState} setState={setFormState} />
-      </Suspense>
-    </AnimatePresence>,
-    <AnimatePresence key={3}>
-      <Suspense fallback={null}>
-        <Visibility state={formState} setState={setFormState} />
-      </Suspense>
-    </AnimatePresence>,
-  ];
+  const forms = useMemo(
+    () => [
+      <AnimatePresence key={0}>
+        <Suspense fallback={null}>
+          <GeneralInfo state={formState} setState={setFormState} />
+        </Suspense>
+      </AnimatePresence>,
+      <AnimatePresence key={1}>
+        <Suspense fallback={null}>
+          <Instructions state={formState} setState={setFormState} />
+        </Suspense>
+      </AnimatePresence>,
+      <AnimatePresence key={2}>
+        <Suspense fallback={null}>
+          <AdditionalInfo state={formState} setState={setFormState} />
+        </Suspense>
+      </AnimatePresence>,
+      <AnimatePresence key={3}>
+        <Suspense fallback={null}>
+          <Visibility state={formState} setState={setFormState} />
+        </Suspense>
+      </AnimatePresence>,
+    ],
+    [formState]
+  );
 
   const { currentElement, currentStep, nextStep, prevStep, isFirst, isLast } =
     useMultistepForm(
@@ -139,6 +144,8 @@ const NewRecipeForm: FC = () => {
     },
   });
 
+  const { imageLoading, upload } = useUploadImage(setFormError);
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (!isLast) return nextStep();
@@ -152,12 +159,15 @@ const NewRecipeForm: FC = () => {
       vegan,
       spicy,
       visibility,
+      image,
     } = formState;
     const types: Omit<RecipeType, 'id'>[] = [];
 
     if (vegetarian) types.push({ name: 'vegetarian' });
     if (vegan) types.push({ name: 'vegan' });
     if (spicy) types.push({ name: 'spicy' });
+
+    const imageURL = await upload(image);
 
     await addRecipe.mutateAsync({
       cookingTime: parseInt(cookingTime),
@@ -166,15 +176,15 @@ const NewRecipeForm: FC = () => {
       steps,
       types,
       visibility,
+      imageURL,
     });
 
     //TODO fix wrong type schema validation
-    //TODO add thumbnail storage
   }
 
   return (
     <>
-      <Loading isLoading={addRecipe.isLoading} />
+      <Loading isLoading={addRecipe.isLoading || imageLoading} />
       <form
         className='flex w-full flex-col items-center font-montserrat text-white'
         onSubmit={handleSubmit}

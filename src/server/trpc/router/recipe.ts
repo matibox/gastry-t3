@@ -26,6 +26,7 @@ export const recipeRouter = router({
           })
         ),
         visibility: z.enum(['group', 'private', 'public']),
+        imageURL: z.string().nullable(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -52,6 +53,7 @@ export const recipeRouter = router({
             })),
           },
           visibility: input.visibility,
+          thumbnail: input.imageURL,
         },
       });
     }),
