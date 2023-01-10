@@ -1,6 +1,5 @@
 import { useRef, useState, type FC } from 'react';
 import Image from 'next/image';
-import Logo from '../../../public/logo.png';
 import Link from 'next/link';
 import { useSession, signIn } from 'next-auth/react';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -19,12 +18,11 @@ const Navbar: FC = () => {
 
   return (
     <div className='fixed top-0 left-0 z-50 flex h-[var(--navbar-height)] w-screen items-center justify-between bg-black px-5 md:px-16'>
-      <Link href='/'>
-        <Image
-          src={Logo}
-          alt='gastry logo'
-          className='h-12 w-auto ring-green'
-        />
+      <Link href='/' className='flex items-center gap-3'>
+        <Image src='/logo.png' alt='logo' height={32} width={32} />
+        <span className='font-montserrat text-3xl font-light text-white'>
+          gastry
+        </span>
       </Link>
       {session && (
         <button
