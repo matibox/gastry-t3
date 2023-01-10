@@ -10,7 +10,7 @@ import { type StepProps } from './NewRecipeForm';
 
 const ingredientSchema = z.object({
   name: z.string().min(1, "Name can't be empty"),
-  value: z.string().min(1, "Value can't be empty"),
+  value: z.string().min(1, "Quantity can't be empty"),
   unit: z.string().nullable(),
 });
 

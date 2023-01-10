@@ -178,8 +178,6 @@ const NewRecipeForm: FC = () => {
       visibility,
       imageURL,
     });
-
-    //TODO fix wrong type schema validation
   }
 
   return (
