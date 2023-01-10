@@ -60,7 +60,7 @@ type NavMenuProps = {
 const NavMenu: FC<NavMenuProps> = ({ session }) => {
   return (
     <motion.ul
-      className='absolute -bottom-40 right-0 mr-5 rounded-lg bg-black p-4 font-open-sans text-white md:mr-16'
+      className='absolute -bottom-40 right-0 mr-5 rounded-lg bg-neutral-900 p-4 font-open-sans text-white md:mr-16'
       initial={'hidden'}
       animate={'show'}
       exit={'hidden'}

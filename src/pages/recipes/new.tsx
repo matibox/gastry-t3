@@ -1,6 +1,5 @@
 import { type GetServerSideProps, type NextPage } from 'next';
 import { type Session } from 'next-auth';
-import { useSession } from 'next-auth/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import NewRecipeForm from '../../components/recipeForm/NewRecipeForm';
@@ -13,8 +12,6 @@ import {
 const NewRecipe: NextPage<
   InferGSSPWithSession<typeof getServerSideProps>
 > = () => {
-  const { data: session } = useSession();
-
   const router = useRouter();
 
   return (
@@ -22,7 +19,7 @@ const NewRecipe: NextPage<
       <Head>
         <title>New recipe - Gastry</title>
       </Head>
-      <div className='flex min-h-[calc(100vh_-_var(--navbar-height))] flex-col gap-10 border-t border-beige bg-black p-6'>
+      <div className='flex min-h-[calc(100vh_-_var(--navbar-height))] flex-col gap-10 bg-black p-6'>
         <Button
           onClick={() => router.back()}
           variant='secondary'

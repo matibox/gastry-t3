@@ -22,11 +22,11 @@ const YourRecipes: NextPage<
       <Head>
         <title>Your recipes - Gastry</title>
       </Head>
-      <div className='relative flex h-[calc(100vh_-_var(--navbar-height)_-_3rem)] w-screen flex-col items-center gap-6 py-6 md:h-full'>
+      <div className='relative flex h-[calc(100vh_-_var(--navbar-height)_-_3rem)] w-screen flex-col items-center gap-6 bg-black py-6 md:h-full'>
         {session ? (
           <>
-            <h1 className='font-montserrat text-4xl text-black'>
-              your recipes
+            <h1 className='font-montserrat text-4xl text-white'>
+              Your Recipes
             </h1>
             <RoundButton
               className='fixed bottom-20 right-4'

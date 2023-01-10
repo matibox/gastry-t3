@@ -111,7 +111,7 @@ const GeneralInfo: FC<StepProps> = ({ state, setState }) => {
             />
           </>
         </Label>
-        <div className='border-t-[1px] border-dark-gray pt-2'>
+        <div className='border-t border-dark-gray pt-2'>
           <div className='mt-1 grid grid-cols-2 gap-x-4 gap-y-2'>
             <Label>
               <>

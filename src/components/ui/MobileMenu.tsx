@@ -101,7 +101,7 @@ const MobileMenu: FC = () => {
   if (router.pathname === '/recipes/new') return null;
 
   return (
-    <nav className='fixed bottom-0 left-0 flex h-14 w-screen items-center justify-evenly bg-black md:hidden'>
+    <nav className='fixed bottom-0 left-0 flex h-14 w-screen items-center justify-evenly border-t border-orange bg-neutral-900 md:hidden'>
       {links.map(link => (
         <Link
           href={link.route}

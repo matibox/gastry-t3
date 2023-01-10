@@ -14,10 +14,8 @@ const Navbar: FC = () => {
   const btnRef = useRef<HTMLButtonElement>(null);
   useClickOutside(btnRef, setMenuOpened);
 
-  //TODO make logo with image and text instead of a whole image
-
   return (
-    <div className='fixed top-0 left-0 z-50 flex h-[var(--navbar-height)] w-screen items-center justify-between bg-black px-5 md:px-16'>
+    <div className='fixed top-0 left-0 z-50 flex h-[var(--navbar-height)] w-screen items-center justify-between border-b border-beige bg-neutral-900 px-5 md:px-16'>
       <Link href='/' className='flex items-center gap-3'>
         <Image src='/logo.png' alt='logo' height={32} width={32} />
         <span className='font-montserrat text-3xl font-light text-white'>
