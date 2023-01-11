@@ -10,8 +10,8 @@ type HeroProps = {
 const Hero: FC<HeroProps> = ({ scrollToRef }) => {
   return (
     <section className='relative grid h-[calc(100vh_-_var(--navbar-height))] place-items-center'>
-      <div className='absolute top-0 left-0 -z-10 h-full w-full bg-hero bg-cover bg-center' />
-      <div className='absolute top-0 left-0 -z-10 h-full w-full bg-black/60' />
+      <div className='absolute top-0 left-0 z-0 h-full w-full bg-hero bg-cover bg-center' />
+      <div className='absolute top-0 left-0 z-0 h-full w-full bg-black/60' />
       <div className='align-center flex flex-col justify-center gap-6'>
         <h1 className='relative text-center font-montserrat text-7xl font-medium text-white'>
           gastry
@@ -25,7 +25,7 @@ const Hero: FC<HeroProps> = ({ scrollToRef }) => {
               behavior: 'smooth',
             })
           }
-          className='mx-auto mt-6'
+          className='z-10 mx-auto mt-6'
         >
           <>
             <span className='text-lg'>learn more</span>

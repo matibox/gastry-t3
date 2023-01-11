@@ -26,10 +26,10 @@ const RecipeRow: FC<RecipeRowProps> = ({ recipe, imgPriority }) => {
           priority={imgPriority}
         />
         <div className='flex h-full grow flex-col gap-1 self-start font-montserrat md:mt-2 md:gap-0'>
-          <span className='leading-5 text-white md:text-lg'>
+          <span className='leading-5 text-white transition-colors group-hover:text-orange md:text-lg'>
             {recipe.title}
           </span>
-          <span className='text-xs text-orange md:text-sm'>
+          <span className='text-xs text-gray md:text-sm'>
             {recipe.cookingTime} minutes
           </span>
         </div>

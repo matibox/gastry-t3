@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import StandardRecipeList from '../../components/recipeList/StandardList';
+import ErrorMessage from '../../components/ui/ErrorMessage';
 import Loading from '../../components/ui/Loading';
 import RoundButton from '../../components/ui/RoundButton';
 import SignIn from '../../components/ui/SignIn';
@@ -19,11 +20,9 @@ const YourRecipes: NextPage<
   const router = useRouter();
   const { data: session } = useSession();
 
-  //? query below in gSSP
   const { data: recipes, isLoading, error } = trpc.recipes.getYour.useQuery();
 
   //TODO infinite scroll
-  //TODO error handling
 
   return (
     <>
@@ -37,7 +36,11 @@ const YourRecipes: NextPage<
             <h1 className='mb-2 font-montserrat text-4xl text-white'>
               Your Recipes
             </h1>
-            <StandardRecipeList recipes={recipes} />
+            {error ? (
+              <ErrorMessage error={error.message} className='font-montserrat' />
+            ) : (
+              <StandardRecipeList recipes={recipes} />
+            )}
             <RoundButton
               className='fixed bottom-20 right-4'
               onClick={() => router.push('/recipes/new')}
