@@ -14,7 +14,7 @@ const RecipeRow: FC<RecipeRowProps> = ({ recipe, imgPriority }) => {
       href={`/recipes/${recipe.id}`}
       className='group block w-full border-b border-neutral-800 pt-8 pb-8 first:pt-0 last:border-b-0 last:pb-0'
     >
-      <div className='relative flex h-full w-full items-center gap-4 rounded before:absolute before:top-1/2 before:-left-4 before:h-10 before:w-1 before:-translate-y-[50%] before:rounded-r-md before:bg-orange before:opacity-0 before:transition-opacity before:duration-200 group-hover:before:opacity-100 md:gap-8 md:before:w-1.5'>
+      <div className='relative flex h-28 w-full items-center gap-4 rounded before:absolute before:top-1/2 before:-left-4 before:h-10 before:w-1 before:-translate-y-[50%] before:rounded-r-md before:bg-orange before:opacity-0 before:transition-opacity before:duration-200 group-hover:before:opacity-100 md:gap-8 md:before:w-1.5'>
         <Image
           src={recipe.thumbnail ?? '/noRecipe.png'}
           alt={`${
@@ -22,7 +22,7 @@ const RecipeRow: FC<RecipeRowProps> = ({ recipe, imgPriority }) => {
           } `}
           width={160}
           height={100}
-          className='rounded'
+          className='h-full w-auto rounded'
           priority={imgPriority}
         />
         <div className='flex h-full grow flex-col gap-1 self-start font-montserrat md:mt-2 md:gap-0'>
