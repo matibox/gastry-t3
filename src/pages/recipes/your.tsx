@@ -3,6 +3,7 @@ import { type Session } from 'next-auth';
 import { useSession } from 'next-auth/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import StandardRecipeList from '../../components/recipeList/StandardList';
 import RoundButton from '../../components/ui/RoundButton';
 import SignIn from '../../components/ui/SignIn';
 import {
@@ -22,12 +23,13 @@ const YourRecipes: NextPage<
       <Head>
         <title>Your recipes - Gastry</title>
       </Head>
-      <div className='relative flex h-[calc(100vh_-_var(--navbar-height)_-_3rem)] w-screen flex-col items-center gap-6 bg-black py-6 md:h-full'>
+      <div className='relative flex w-full flex-col items-center gap-6 bg-black py-6'>
         {session ? (
           <>
-            <h1 className='font-montserrat text-4xl text-white'>
+            <h1 className='mb-2 font-montserrat text-4xl text-white'>
               Your Recipes
             </h1>
+            <StandardRecipeList />
             <RoundButton
               className='fixed bottom-20 right-4'
               onClick={() => router.push('/recipes/new')}

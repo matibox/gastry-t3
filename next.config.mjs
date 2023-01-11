@@ -1,4 +1,7 @@
 // @ts-check
+
+import { env } from './src/env/client.mjs';
+
 /**
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
  * This is especially useful for Docker builds.
@@ -18,6 +21,10 @@ const config = {
       {
         protocol: 'https',
         hostname: 'lh3.googleusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: env.NEXT_PUBLIC_SUPABASE_URL.split('//')[1] ?? '',
       },
     ],
   },

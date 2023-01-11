@@ -39,7 +39,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <Navbar />
       </nav>
       <main
-        className={`${montserrat.variable} ${openSans.variable} min-h-[calc(100vh_-_var(--navbar-height))]`}
+        className={`${montserrat.variable} ${openSans.variable} min-h-[calc(100vh_-_var(--navbar-height))] pb-14 md:pb-0`}
       >
         <AnimatePresence>{modal.visible && <Modal />}</AnimatePresence>
         <Component {...pageProps} />
