@@ -134,7 +134,7 @@ const NewRecipeForm: FC = () => {
       setFormError
     );
 
-  const addRecipe = trpc.recipe.create.useMutation({
+  const addRecipe = trpc.recipes.create.useMutation({
     onError: err => {
       setFormError(err.message);
     },

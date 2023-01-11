@@ -57,4 +57,17 @@ export const recipeRouter = router({
         },
       });
     }),
+  getYour: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.prisma.recipe.findMany({
+      where: {
+        userId: ctx.session.user.id,
+      },
+      select: {
+        id: true,
+        cookingTime: true,
+        thumbnail: true,
+        title: true,
+      },
+    });
+  }),
 });

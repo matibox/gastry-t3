@@ -3,7 +3,7 @@ import { authRouter } from './auth';
 import { recipeRouter } from './recipe';
 
 export const appRouter = router({
-  recipe: recipeRouter,
+  recipes: recipeRouter,
   auth: authRouter,
 });
 

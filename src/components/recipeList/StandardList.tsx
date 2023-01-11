@@ -2,44 +2,17 @@ import type { Recipe } from '@prisma/client';
 import { type FC } from 'react';
 import RecipeRow from '../recipeCard/RecipeRow';
 
-const recipes: Recipe[] = [
-  {
-    cookingTime: 60,
-    createdAt: new Date(),
-    thumbnail: null,
-    title: 'Vegetable salad with wheat bread',
-    updatedAt: new Date(),
-    visibility: 'public',
-    userId: 'pepega',
-    id: 'kasjdfhas-dfasdf',
-  },
-  {
-    cookingTime: 60,
-    createdAt: new Date(),
-    thumbnail: null,
-    title: 'Another one',
-    updatedAt: new Date(),
-    visibility: 'public',
-    userId: 'pepega',
-    id: 'kasjdfhas-dfasdf',
-  },
-  {
-    cookingTime: 60,
-    createdAt: new Date(),
-    thumbnail: null,
-    title: 'Another one',
-    updatedAt: new Date(),
-    visibility: 'public',
-    userId: 'pepega',
-    id: 'kasjdfhas-dfasdf',
-  },
-];
+type StandardRecipeListProps = {
+  recipes:
+    | Pick<Recipe, 'id' | 'cookingTime' | 'thumbnail' | 'title'>[]
+    | undefined;
+};
 
-const StandardRecipeList: FC = () => {
+const StandardRecipeList: FC<StandardRecipeListProps> = ({ recipes }) => {
   return (
     <div className='flex w-screen max-w-7xl flex-col px-4'>
-      {[...recipes, ...recipes].map(recipe => (
-        <RecipeRow key={recipe.id} recipe={recipe} />
+      {recipes?.map((recipe, i) => (
+        <RecipeRow key={recipe.id} recipe={recipe} imgPriority={i < 4} />
       ))}
     </div>
   );

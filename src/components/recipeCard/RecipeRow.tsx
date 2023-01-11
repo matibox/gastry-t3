@@ -4,10 +4,11 @@ import Link from 'next/link';
 import { type FC } from 'react';
 
 type RecipeRowProps = {
-  recipe: Recipe;
+  recipe: Pick<Recipe, 'id' | 'cookingTime' | 'thumbnail' | 'title'>;
+  imgPriority: boolean;
 };
 
-const RecipeRow: FC<RecipeRowProps> = ({ recipe }) => {
+const RecipeRow: FC<RecipeRowProps> = ({ recipe, imgPriority }) => {
   return (
     <Link
       href={`/recipes/${recipe.id}`}
@@ -22,6 +23,7 @@ const RecipeRow: FC<RecipeRowProps> = ({ recipe }) => {
           width={160}
           height={100}
           className='rounded'
+          priority={imgPriority}
         />
         <div className='flex h-full grow flex-col gap-1 self-start font-montserrat md:mt-2 md:gap-0'>
           <span className='leading-5 text-white md:text-lg'>
